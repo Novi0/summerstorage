@@ -3,21 +3,18 @@ package summerstorage
 class User {
 	long id;
 	String userName;
-	String password;
-	String userEmail;
 	String name;
+	String userEmail;
+	String password;
 	String phone;
 	double rating;
 	String selfie;
 	static constraints = {
-		userName unique:true;
-		password unique:true;
-		userEmail email:true, blank:false ;
-		name blank:false;
-		phone blank:false;
-		rating blindable: true;
+		name (blank:false);
+		userEmail (email: true, blank: false, unique: true, matches: '.*\\@wustl.edu'); 
+		password (password: true);
+		phone (blank:false, size: 10..11);
+		rating (blindable: true);
 	}
 	static hasMany=[storage:Storage]
-	
-   
 }
