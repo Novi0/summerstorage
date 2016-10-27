@@ -4,9 +4,13 @@ package summerstorage
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import summerstorage.Storage;
+import summerstorage.User;
 
 @Transactional(readOnly = true)
 class UserController {
+	
+	static scaffold = true
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -14,6 +18,21 @@ class UserController {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
+
+	def search() {
+		params.max = Math.min(params.max ? params.int('max') : 5, 100)
+ 
+		def userList = User.createCriteria().list (params) {
+			if ( params.name ) {
+				ilike("name", params.name)
+			}
+			if ( params.rating ) {
+				ilike("rating", Double.valueOf(params.rating))
+			}
+		}
+ 
+		[userInstanceList: userList, userInstanceCount: userList.totalCount]
+	}
 
     def show(User userInstance) {
         respond userInstance

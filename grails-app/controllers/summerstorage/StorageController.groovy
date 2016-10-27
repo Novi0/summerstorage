@@ -4,6 +4,7 @@ package summerstorage
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import summerstorage.Storage;
 
 @Transactional(readOnly = true)
 class StorageController {

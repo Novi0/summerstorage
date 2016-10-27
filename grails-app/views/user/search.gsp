@@ -12,7 +12,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				
+				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-user" class="content scaffold-list" role="main">
@@ -20,14 +20,25 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
+			<fieldset class="form">
+    			<g:form action="search" method="GET">
+        			<div class="fieldcontain">
+            			<label for="query">Search for Users:</label>
+            			<input name="name" type="text" value="${params?.name}"/>
+            			<input name="rating" type="text" value = "${params?.rating}"/>
+            			<g:submitButton class="button" name="submitButton" value="search" />
+        			</div>
+    			</g:form>
+			</fieldset>
 			<table>
 			<thead>
 					<tr>
 					
+								
 						<g:sortableColumn property="name" title="${message(code: 'user.name.label', default: 'Name')}" />
-						
+					
 						<g:sortableColumn property="userEmail" title="${message(code: 'user.userEmail.label', default: 'User Email')}" />
-							
+									
 						<g:sortableColumn property="phone" title="${message(code: 'user.phone.label', default: 'Phone')}" />
 					
 						<g:sortableColumn property="rating" title="${message(code: 'user.rating.label', default: 'Rating')}" />
@@ -39,11 +50,9 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "name")}</g:link></td>
-					
+																
 						<td>${fieldValue(bean: userInstance, field: "userEmail")}</td>
-						
-									
-								
+										
 						<td>${fieldValue(bean: userInstance, field: "phone")}</td>
 					
 						<td>${fieldValue(bean: userInstance, field: "rating")}</td>

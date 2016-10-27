@@ -1,4 +1,3 @@
-<%@ page import="summerstorage.Storage" %>
 <!DOCTYPE html>
 <html>
 	<head>

@@ -1,7 +1,5 @@
 <%@ page import="summerstorage.Storage" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'photo', 'error')} required">
 	<label for="photo">
 		<g:message code="storage.photo.label" default="Photo" />

@@ -1,24 +1,15 @@
 <%@ page import="summerstorage.User" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
-	<label for="userName">
-		<g:message code="user.userName.label" default="User Name" />
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'name', 'error')} required">
+	<label for="name">
+		<g:message code="user.name.label" default="Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="userName" required="" value="${userInstance?.userName}"/>
+	<g:textField name="name" required="" value="${userInstance?.name}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
-	<label for="password">
-		<g:message code="user.password.label" default="Password" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="password" required="" value="${userInstance?.password}"/>
-
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userEmail', 'error')} required">
 	<label for="userEmail">
@@ -29,12 +20,12 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'name', 'error')} required">
-	<label for="name">
-		<g:message code="user.name.label" default="Name" />
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
+	<label for="password">
+		<g:message code="user.password.label" default="Password" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="name" required="" value="${userInstance?.name}"/>
+	<g:textField name="password" required="" value="${userInstance?.password}"/>
 
 </div>
 
