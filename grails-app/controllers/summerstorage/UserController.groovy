@@ -4,13 +4,9 @@ package summerstorage
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import summerstorage.Storage;
-import summerstorage.User;
 
 @Transactional(readOnly = true)
 class UserController {
-	
-	static scaffold = true
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -19,58 +15,12 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
-	def search() {
-		params.max = Math.min(params.max ? params.int('max') : 5, 100)
- 
-		def userList = User.createCriteria().list (params) {
-			
-			if ( params.name ) {
-				ilike("name", params.name)
-			}
-			if ( params.rating ) {
-				gt("rating", Double.valueOf(params.rating))
-				
-			}
-		}
- 
-		[userInstanceList: userList, userInstanceCount: userList.totalCount]
-	}
-	
-	/*
-	def search(params){
-		def name = params.name;
-		double rating = 0;
-		
-		if (params.rating){
-		rating = params.rating;
-		}
-		
-		println(rating); 
-		double maxRating = 5;
-		
-		def userList = User.createCriteria().list()
-		{
-		
-			or {
-				eq ('name', name);
-				between('rating', rating, maxRating);
-			}
-			
-		}
-		//http://docs.grails.org/2.2.1/ref/Domain%20Classes/createCriteria.html
-		//response userList;
-		[userInstanceList: userList, userInstanceCount: userList.totalCount]
-	}
-	*/
-	
-	
     def show(User userInstance) {
         respond userInstance
     }
 
     def create() {
-        def u = new User(params)
-		session.user=u
+        respond new User(params)
     }
 
     @Transactional
@@ -86,14 +36,15 @@ class UserController {
         }
 
         userInstance.save flush:true
-
+		session.user=userInstance
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
-                redirect userInstance
+                //redirect userInstance
             }
             '*' { respond userInstance, [status: CREATED] }
         }
+		redirect controller:"Storage",view:"index"
     }
 
     def edit(User userInstance) {
@@ -151,13 +102,15 @@ class UserController {
             '*'{ render status: NOT_FOUND }
         }
     }
-	def createStorage(User userInstance){
-		def s=new Storage()
+	def createStorage(){
+		def u=User.findById(session.user.id)
+		def s=chainModel?.storage
+		println(s.id);
+		println(session.user.id)
 		s.save flush:true
-		userInstance.addToStorage(s);
-		userInstance.save flush:true
-		
-		//render view:"index"
+		u.addToStorage(s)
+		u.save flush:true
+		render view:"show/",model:[serviceHoursInstance:s]
 	}
 	def register(){
 		redirect(action: 'create')
@@ -166,9 +119,10 @@ class UserController {
 	def login() {
 		if(params.user != null && params.password != null){
 			if(request.method =='POST'){
-				def u= User.findByUserEmailAndPassword(params.user,params.password)
+				def u= User.findByUserNameAndPassword(params.user,params.password)
 				if(u){
 					session.user=u
+					flash.id=u.id
 					flash.message="login succeed";
 					//redirect(view: "search")
 					redirect(controller:'Storage', action:'index')
