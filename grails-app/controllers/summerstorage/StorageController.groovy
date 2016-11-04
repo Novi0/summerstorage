@@ -4,7 +4,6 @@ package summerstorage
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import summerstorage.Storage;
 
 @Transactional(readOnly = true)
 class StorageController {
@@ -15,66 +14,21 @@ class StorageController {
         params.max = Math.min(max ?: 10, 100)
         respond Storage.list(params), model:[storageInstanceCount: Storage.count()]
     }
-    
 
     def show(Storage storageInstance) {
         respond storageInstance
     }
-	
-	def search() {
-		params.max = Math.min(params.max ? params.int('max') : 5, 100)
- 
-		def storageList = Storage.createCriteria().list (params) {
-			
-			if (params.startDate){
-				le("startDate", params.startDate)
-			}
-			
-			if (params.endDate){
-				ge("endDate", params.endDate)
-			}
-			
-			if (params.floorsUp){
-				ge("floorsUp", Integer.valueOf(params.floorsUp))
-			}
-			
-			if ( params.locks ) {
-				ge("locks", Integer.valueOf(params.locks))
-			}
-			
-			if ( params.pricefrom){
-				ge("price", Double.valueOf(params.pricefrom))
-			}
-			
-			if (params.priceto){
-				le("price", Double.valueOf(params.priceto))
-			}
-			if (params.climate){
-				eq("climate", true)
-			}
-			
-			if (params.type != "All"){
-				eq("type", params.type)
-			}
-			
-			if (params.heavyAllowed){
-				eq("heavyAllowed", true)
-			}
-			
-		}
- 
-		[storageInstanceList: storageList, storageInstanceCount: storageList.totalCount]
-		//render view:"index"
-		
-	}
 
-    def create() {
-//		def s=new Storage()
+    def create(User userInstance) {
+		
 //		respond s
 //		s.save flush:true
 //		userInstance.addToStorage(s);
-//		userInstance.save flush:true
+		//userInstance.id
+		//flash.user=userInstance
         respond new Storage(params)
+		
+		//return ['storage':s]
     }
 	
     @Transactional
@@ -89,9 +43,6 @@ class StorageController {
             return
         }
 		storageInstance.save flush:true
-//		userInstance.addToStorage(storageInstance);
-//		userInstance.save flush:true
-
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'storage.label', default: 'Storage'), storageInstance.id])
@@ -99,6 +50,7 @@ class StorageController {
             }
             '*' { respond storageInstance, [status: CREATED] }
         }
+		chain(controller:"User",action:"createStorage",model:[storage:storageInstance])
     }
 
     def edit(Storage storageInstance) {
