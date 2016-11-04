@@ -19,7 +19,87 @@
 				<li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}">My Account</g:link></li>
 			</ul>
 		</div>
+		<g:form action = "search" method="GET">
+		<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'location', 'error')}" style="text-align: left;">
+	<label for="location">
+		<g:message code="storage.location.label" default="Location" />
 		
+	</label>
+	<g:textField name="location" value="${storageInstance?.location}"/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'startDate', 'error')} required">
+	<label for="startDate">
+		<g:message code="storage.startDate.label" default="Start Date" />
+	</label>
+	<g:datePicker name="startDate" precision="day"   />
+
+</div>
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'endDate', 'error')}">
+	<label for="endDate">
+		<g:message code="storage.endDate.label" default="End Date" />
+	</label>
+	<g:datePicker name="endDate" precision="day" />
+
+</div>
+
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'floorsUp', 'error')}" style="text-align: left;">
+	<label for="floorsUp">
+		<g:message code="storage.floorsUp.label" default="Floors Up" />
+	</label>
+	<g:field name="floorsUp" type="number" />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'locks', 'error')}" style="text-align: left;">
+	<label for="locks">
+		<g:message code="storage.locks.label" default="Locks" />
+		
+	</label>
+	<g:field name="locks" type="number"  />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'price', 'error')}" style="text-align: left;">
+	<label for="price">
+		<g:message code="storage.price.label" default="Price" />
+		
+	</label>
+	<g:field name="pricefrom" type="number" /> - <g:field name="priceto" type="number" />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'climate', 'error')}" style="text-align: left;">
+	<label for="climate">
+		<g:message code="storage.climate.label" default="Climate" />
+		
+	</label>
+	<g:checkBox name="climate" />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'type', 'error')}" style="text-align: left;">
+	<label for="type">
+		<g:message code="storage.type.label" default="Type" />
+		
+	</label>
+	<g:select name="type" required="" from="${["All", "Basement", "Storage Locker", "Close Room", "Open Room" ] }"/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'heavyAllowed', 'error')}" style="text-align: left;">
+	<label for="heavyAllowed">
+		<g:message code="storage.heavyAllowed.label" default="Heavy Allowed" />
+		
+	</label>
+	<g:checkBox name="heavyAllowed"  />
+
+</div>
+
+<g:submitButton name="search" value="search"/>
+		</g:form>
 		<div id="list-storage" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

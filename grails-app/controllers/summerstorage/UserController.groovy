@@ -23,23 +23,54 @@ class UserController {
 		params.max = Math.min(params.max ? params.int('max') : 5, 100)
  
 		def userList = User.createCriteria().list (params) {
+			
 			if ( params.name ) {
 				ilike("name", params.name)
 			}
 			if ( params.rating ) {
-				ilike("rating", Double.valueOf(params.rating))
+				gt("rating", Double.valueOf(params.rating))
+				
 			}
 		}
  
 		[userInstanceList: userList, userInstanceCount: userList.totalCount]
 	}
-
+	
+	/*
+	def search(params){
+		def name = params.name;
+		double rating = 0;
+		
+		if (params.rating){
+		rating = params.rating;
+		}
+		
+		println(rating); 
+		double maxRating = 5;
+		
+		def userList = User.createCriteria().list()
+		{
+		
+			or {
+				eq ('name', name);
+				between('rating', rating, maxRating);
+			}
+			
+		}
+		//http://docs.grails.org/2.2.1/ref/Domain%20Classes/createCriteria.html
+		//response userList;
+		[userInstanceList: userList, userInstanceCount: userList.totalCount]
+	}
+	*/
+	
+	
     def show(User userInstance) {
         respond userInstance
     }
 
     def create() {
-        respond new User(params)
+        def u = new User(params)
+		session.user=u
     }
 
     @Transactional
@@ -135,7 +166,7 @@ class UserController {
 	def login() {
 		if(params.user != null && params.password != null){
 			if(request.method =='POST'){
-				def u= User.findByUserNameAndPassword(params.user,params.password)
+				def u= User.findByUserEmailAndPassword(params.user,params.password)
 				if(u){
 					session.user=u
 					flash.message="login succeed";

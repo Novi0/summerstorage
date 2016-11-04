@@ -15,10 +15,58 @@ class StorageController {
         params.max = Math.min(max ?: 10, 100)
         respond Storage.list(params), model:[storageInstanceCount: Storage.count()]
     }
+    
 
     def show(Storage storageInstance) {
         respond storageInstance
     }
+	
+	def search() {
+		params.max = Math.min(params.max ? params.int('max') : 5, 100)
+ 
+		def storageList = Storage.createCriteria().list (params) {
+			
+			if (params.startDate){
+				le("startDate", params.startDate)
+			}
+			
+			if (params.endDate){
+				ge("endDate", params.endDate)
+			}
+			
+			if (params.floorsUp){
+				ge("floorsUp", Integer.valueOf(params.floorsUp))
+			}
+			
+			if ( params.locks ) {
+				ge("locks", Integer.valueOf(params.locks))
+			}
+			
+			if ( params.pricefrom){
+				ge("price", Double.valueOf(params.pricefrom))
+			}
+			
+			if (params.priceto){
+				le("price", Double.valueOf(params.priceto))
+			}
+			if (params.climate){
+				eq("climate", true)
+			}
+			
+			if (params.type != "All"){
+				eq("type", params.type)
+			}
+			
+			if (params.heavyAllowed){
+				eq("heavyAllowed", true)
+			}
+			
+		}
+ 
+		[storageInstanceList: storageList, storageInstanceCount: storageList.totalCount]
+		//render view:"index"
+		
+	}
 
     def create() {
 //		def s=new Storage()

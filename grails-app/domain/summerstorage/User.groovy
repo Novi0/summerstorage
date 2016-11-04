@@ -9,6 +9,7 @@ class User {
 	double rating;
 	String selfie;
 	
+	
 	/*
 	byte[] image;
 	String imageName;
