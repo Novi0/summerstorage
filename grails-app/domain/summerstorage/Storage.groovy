@@ -3,16 +3,18 @@ package summerstorage
 import java.util.Date;
 
 class Storage {
+	static searchable = true;
+	
 	long id;
 	String photo;
 	String location;
 	Date startDate;
 	Date endDate;
-	int area;
+	double area;
 	int height;
 	int floorsUp;
 	int locks;
-	int price;
+	double price;
 	Boolean climate;
 	String type;
 	Boolean heavyAllowed;
@@ -29,8 +31,8 @@ class Storage {
 		locks blank: false;
 		price blank: false;
 		climate blank: false, attribute:["Yes","No"];
-		type blank: false, atrribute: ["Basement", "Storage Locker", "Close Room", "Open Room" ];
-		heavyAllowed blank: false, attribute: ["Yse","No"];
+		type blank: false, atrribute: ["Basement", "Storage Locker", "Closed Room", "Open Room" ];
+		heavyAllowed blank: false, attribute: ["Yes","No"];
    }
 	static belongTo=[user:User]
 	
