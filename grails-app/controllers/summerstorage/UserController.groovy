@@ -64,7 +64,8 @@ class UserController {
 	*/
 	
     def create() {
-        respond new User(params)
+        def u = new User(params)
+		session.user=u
     }
 
     @Transactional
@@ -163,7 +164,7 @@ class UserController {
 	def login() {
 		if(params.user != null && params.password != null){
 			if(request.method =='POST'){
-				def u= User.findByUserNameAndPassword(params.user,params.password)
+				def u= User.findByUserEmailAndPassword(params.user, params.password)
 				if(u){
 					session.user=u
 					flash.id=u.id
