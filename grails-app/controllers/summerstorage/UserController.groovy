@@ -64,8 +64,7 @@ class UserController {
 	*/
 	
     def create() {
-        def u = new User(params)
-		session.user=u
+        respond new User(params)
     }
 
     @Transactional
@@ -81,7 +80,8 @@ class UserController {
         }
 
         userInstance.save flush:true
-		session.user=userInstance
+	session.user=userInstance
+	flash.id=userInstance.id
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
@@ -89,7 +89,7 @@ class UserController {
             }
             '*' { respond userInstance, [status: CREATED] }
         }
-		redirect controller:"Storage",view:"index"
+	redirect controller:"Storage",view:"index"
     }
 
     def edit(User userInstance) {
@@ -151,11 +151,11 @@ class UserController {
 		def u=User.findById(session.user.id)
 		def s=chainModel?.storage
 		println(s.id);
-		println(session.user.id)
+		println(u.id)
 		s.save flush:true
 		u.addToStorage(s)
 		u.save flush:true
-		render view:"show/",model:[serviceHoursInstance:s]
+		redirect action:"show",id:u.id,model:[serviceHoursInstance:s]
 	}
 	def register(){
 		redirect(action: 'create')
