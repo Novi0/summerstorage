@@ -11,7 +11,7 @@ class Storage {
 	Date startDate;
 	Date endDate;
 	double area;
-	int height;
+	double height;
 	int floorsUp;
 	int locks;
 	double price;
@@ -25,11 +25,11 @@ class Storage {
 		location blank: false;
 		startDate blank: false;
 		endDateblank: false;
-		area blank: false;
-		height blank: false;
+		area blank: false, number: true, min: 0d;
+		height blank: false, min: 0d;
 		floorsUp blank: false;
 		locks blank: false;
-		price blank: false;
+		price blank: false, min: 0d;
 		climate blank: false, attribute:["Yes","No"];
 		type blank: false, atrribute: ["Basement", "Storage Locker", "Closed Room", "Open Room" ];
 		heavyAllowed blank: false, attribute: ["Yes","No"];

@@ -32,7 +32,7 @@
 		<g:message code="storage.area.label" default="Area" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="area" type="number" value="${storageInstance.area}" required=""/>
+	<g:field name="area" type="number decimal" value="${storageInstance.area}" required=""/>
 
 </div>
 
@@ -41,7 +41,7 @@
 		<g:message code="storage.height.label" default="Height" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="height" type="number" value="${storageInstance.height}" required=""/>
+	<g:field name="height" type="number decimal" value="${storageInstance.height}" required=""/>
 
 </div>
 
@@ -68,7 +68,7 @@
 		<g:message code="storage.price.label" default="Price" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="price" type="number" value="${storageInstance.price}" required=""/>
+	<g:field name="price" type="number decimal" value="${storageInstance.price}" required=""/>
 
 </div>
 

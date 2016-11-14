@@ -28,7 +28,7 @@ class UserController {
 				ilike("name", params.name)
 			}
 			if ( params.rating ) {
-				gt("rating", Double.valueOf(params.rating))
+				ge("rating", Double.valueOf(params.rating))
 				
 			}
 		}
@@ -64,8 +64,9 @@ class UserController {
 	*/
 	
     def create() {
-        respond new User(params)
-    }
+        def u = new User(params)
+		session.user=u
+     }
 
     @Transactional
     def save(User userInstance) {
