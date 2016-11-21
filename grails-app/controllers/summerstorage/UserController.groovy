@@ -15,7 +15,22 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
-    def show(User userInstance) {
+	def auth(User userInstance) {
+		if(!session.user) {
+			redirect(uri: "")
+			flash.message = "Please login"
+			return false
+			
+		}
+		else if(!(session.user.userEmail == userInstance.userEmail)) {
+			flash.message = "You must be logged in as ${userInstance.name} to do that!"
+			redirect(controller:"user", action:"index")
+			return false
+		}
+		return true;
+	}
+	
+	def show(User userInstance) {
         respond userInstance
     }
 	
@@ -26,10 +41,6 @@ class UserController {
 			
 			if ( params.name ) {
 				ilike("name", params.name)
-			}
-			if ( params.rating ) {
-				ge("rating", Double.valueOf(params.rating))
-				
 			}
 		}
  
@@ -70,7 +81,10 @@ class UserController {
 
     @Transactional
     def save(User userInstance) {
-        if (userInstance == null) {
+        if (!auth(userInstance))
+			return 
+		
+		if (userInstance == null) {
             notFound()
             return
         }
@@ -94,12 +108,17 @@ class UserController {
     }
 
     def edit(User userInstance) {
-        respond userInstance
+		if (!auth(userInstance))
+			return
+		respond userInstance
     }
 
     @Transactional
     def update(User userInstance) {
-        if (userInstance == null) {
+		if (!auth(userInstance))
+			return
+			
+		if (userInstance == null) {
             notFound()
             return
         }
@@ -122,7 +141,9 @@ class UserController {
 
     @Transactional
     def delete(User userInstance) {
-
+		if (!auth(userInstance))
+			return
+		
         if (userInstance == null) {
             notFound()
             return
@@ -169,17 +190,23 @@ class UserController {
 				if(u){
 					session.user=u
 					flash.id=u.id
-					flash.message="login succeed";
+					flash.message="Hello ${u.name}!";
 					//redirect(view: "search")
-					redirect(controller:'Storage', action:'index')
+					redirect(controller:'Storage', action:'search')
 				}
 				else{
-					flash.message="User not found";
+					flash.message="Username/Password not found";
 					render "User Name or Password is Wrong, Please Try Again"
 				}
 			}
 		}
 	}
+	
+	def logout = {
+		session.user = null
+		redirect(uri: "")
+		flash.message="Please sign in"
+	  }
 	
 	def doUpload(){
 		

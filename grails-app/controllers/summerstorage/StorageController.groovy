@@ -9,6 +9,24 @@ import grails.transaction.Transactional
 class StorageController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
+	//def beforeInterceptor = [action:this.&auth, except:["index", "search", "show"]]
+
+   
+	def auth(Storage storageInstance) {
+		if(!session.user) {
+			redirect(uri: "")
+			flash.message = "Please login"
+			return false
+		}
+		
+		
+		else if( !(session.user.userEmail == storageInstance.user.userEmail) ){
+			flash.message = "Sorry, you can only edit your own entries."
+			return redirect(uri: "/storage/show/${storageInstance.id}")
+		}
+		return true
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -27,60 +45,46 @@ class StorageController {
 			if (params.startDate){
 				le("startDate", params.startDate)
 			}
-			
 			if (params.endDate){
 				ge("endDate", params.endDate)
 			}
-			
 			if (params.floorsUp){
 				ge("floorsUp", Integer.valueOf(params.floorsUp))
 			}
-			
 			if ( params.locks ) {
 				ge("locks", Integer.valueOf(params.locks))
 			}
-			
 			if ( params.pricefrom){
 				ge("price", Double.valueOf(params.pricefrom))
 			}
-			
 			if (params.priceto){
 				le("price", Double.valueOf(params.priceto))
 			}
 			if (params.climate){
 				eq("climate", true)
 			}
-			
 			if (params.type != "All"){
 				eq("type", params.type)
 			}
-			
 			if (params.heavyAllowed){
 				eq("heavyAllowed", true)
-			}
-			
+			}			
 		}
  
 		[storageInstanceList: storageList, storageInstanceCount: storageList.totalCount]
-		//render view:"index"
-		
+				
 	}
 	
     def create(User userInstance) {
-		
-//		respond s
-//		s.save flush:true
-//		userInstance.addToStorage(s);
-		//userInstance.id
-		//flash.user=userInstance
-        respond new Storage(params)
-		
-		//return ['storage':s]
+	    respond new Storage(params)
     }
 	
     @Transactional
     def save(Storage storageInstance) {
-        if (storageInstance == null) {
+		//if (!auth(storageInstance))
+		//return
+		
+		if (storageInstance == null) {
             notFound()
             return
         }
@@ -101,12 +105,17 @@ class StorageController {
     }
 
     def edit(Storage storageInstance) {
-        respond storageInstance
+		if (!auth(storageInstance))
+			return
+		respond storageInstance
     }
 
     @Transactional
     def update(Storage storageInstance) {
-        if (storageInstance == null) {
+		//if (!auth(storageInstance))
+			//return
+		
+		if (storageInstance == null) {
             notFound()
             return
         }
@@ -129,7 +138,9 @@ class StorageController {
 
     @Transactional
     def delete(Storage storageInstance) {
-
+		if(!auth(storageInstance))
+			return
+		
         if (storageInstance == null) {
             notFound()
             return

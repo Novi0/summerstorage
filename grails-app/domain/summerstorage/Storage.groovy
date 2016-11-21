@@ -34,7 +34,7 @@ class Storage {
 		type blank: false, atrribute: ["Basement", "Storage Locker", "Closed Room", "Open Room" ];
 		heavyAllowed blank: false, attribute: ["Yes","No"];
    }
-	static belongTo=[user:User]
+	static belongsTo=[user:User]
 	
    
 }
