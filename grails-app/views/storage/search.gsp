@@ -67,7 +67,7 @@
 		<g:message code="storage.price.label" default="Price" />
 		
 	</label>
-	<g:field name="pricefrom" type="number" /> - <g:field name="priceto" type="number" />
+	<g:field name="pricefrom" type="number decimal" /> - <g:field name="priceto" type="number decimal" />
 
 </div>
 
