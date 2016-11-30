@@ -81,9 +81,6 @@ class UserController {
 
     @Transactional
     def save(User userInstance) {
-        if (!auth(userInstance))
-			return 
-		
 		if (userInstance == null) {
             notFound()
             return

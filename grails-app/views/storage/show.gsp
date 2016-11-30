@@ -23,7 +23,16 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list storage">
-			
+				
+				<g:if test="${storageInstance?.user}">
+				<li class="fieldcontain">
+					<span id="user-label" class="property-label"><g:message code="storage.user.label" default="User" /></span>
+						<g:each in="${storageInstance.user}" var="u">
+						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></span>
+						</g:each>
+				</li>
+				</g:if>
+				
 				<g:if test="${storageInstance?.photo}">
 				<li class="fieldcontain">
 					<span id="photo-label" class="property-label"><g:message code="storage.photo.label" default="Photo" /></span>
