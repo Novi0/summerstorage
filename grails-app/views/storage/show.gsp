@@ -11,7 +11,7 @@
 		<a href="#show-storage" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+				<li><a class="home" href="${createLink(uri: '/user/show/${session.user.id}')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="show" controller="User" action="show" id="${session.id }"  bean="${userInstance}">My Account</g:link></li>
@@ -23,7 +23,7 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list storage">
-				
+			
 				<g:if test="${storageInstance?.user}">
 				<li class="fieldcontain">
 					<span id="user-label" class="property-label"><g:message code="storage.user.label" default="User" /></span>
@@ -55,7 +55,7 @@
 				<li class="fieldcontain">
 					<span id="startDate-label" class="property-label"><g:message code="storage.startDate.label" default="Start Date" /></span>
 					
-						<span class="property-value" aria-labelledby="startDate-label"><g:formatDate date="${storageInstance?.startDate}" /></span>
+						<span class="property-value" aria-labelledby="startDate-label"><g:formatDate format="MMM dd yyyy" date="${storageInstance?.startDate}" /></span>
 					
 				</li>
 				</g:if>
@@ -136,7 +136,7 @@
 				<li class="fieldcontain">
 					<span id="endDate-label" class="property-label"><g:message code="storage.endDate.label" default="End Date" /></span>
 					
-						<span class="property-value" aria-labelledby="endDate-label"><g:formatDate date="${storageInstance?.endDate}" /></span>
+						<span class="property-value" aria-labelledby="endDate-label"><g:formatDate format="MMM dd yyyy" date="${storageInstance?.endDate}" /></span>
 					
 				</li>
 				</g:if>

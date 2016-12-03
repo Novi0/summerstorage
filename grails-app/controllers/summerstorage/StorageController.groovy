@@ -41,7 +41,7 @@ class StorageController {
 		params.max = Math.min(params.max ? params.int('max') : 5, 100)
  
 		def storageList = Storage.createCriteria().list (params) {
-			
+						
 			if (params.startDate){
 				le("startDate", params.startDate)
 			}

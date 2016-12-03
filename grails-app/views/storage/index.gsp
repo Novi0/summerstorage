@@ -63,9 +63,9 @@
 						
 						<td>${fieldValue(bean: storageInstance, field: "type")}</td>
 					
-						<td><g:formatDate format="MMM dd yyyy"="${storageInstance.startDate}" /></td>
+						<td><g:formatDate format="MMM dd yyyy" date="${storageInstance.startDate}" /></td>
 						
-						<td><g:formatDate format="MMM dd yyyy"="${storageInstance.endDate}" /></td>
+						<td><g:formatDate format="MMM dd yyyy" date="${storageInstance.endDate}" /></td>
 					
 						<td>${fieldValue(bean: storageInstance, field: "area")}</td>
 					

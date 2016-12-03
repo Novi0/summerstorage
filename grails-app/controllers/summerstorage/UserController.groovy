@@ -81,6 +81,9 @@ class UserController {
 
     @Transactional
     def save(User userInstance) {
+        //if (!auth(userInstance))
+			//return 
+		
 		if (userInstance == null) {
             notFound()
             return
@@ -168,8 +171,8 @@ class UserController {
     }
 	def createStorage(){
 		def u=User.findById(session.user.id)
+		u.refresh();
 		def s=chainModel?.storage
-		println(s.id);
 		println(u.id)
 		s.save flush:true
 		u.addToStorage(s)
