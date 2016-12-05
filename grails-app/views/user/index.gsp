@@ -30,7 +30,7 @@
 							
 						<g:sortableColumn property="phone" title="${message(code: 'user.phone.label', default: 'Phone')}" />
 					
-						<g:sortableColumn property="rating" title="${message(code: 'user.rating.label', default: 'Rating')}" />
+						<g:sortableColumn property="selfie" title="${message(code: 'user.selfie.label', default: 'Facebook URL')}" />
 					
 					</tr>
 				</thead>
@@ -40,13 +40,11 @@
 					
 						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "name")}</g:link></td>
 					
-						<td>${fieldValue(bean: userInstance, field: "userEmail")}</td>
-						
-									
+						<td>${fieldValue(bean: userInstance, field: "userEmail")}</td>								
 								
 						<td>${fieldValue(bean: userInstance, field: "phone")}</td>
 					
-						<td>${fieldValue(bean: userInstance, field: "rating")}</td>
+						<td>${fieldValue(bean: userInstance, field: "selfie")}</td>
 					
 					</tr>
 				</g:each>

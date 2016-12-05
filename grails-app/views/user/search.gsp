@@ -25,7 +25,7 @@
         			<div class="fieldcontain">
             			<label for="query">Search for Users:</label>
             			<input name="name" type="text" value="${params?.name}"/>
-            			<input name="rating" type="text" value = "${params?.rating}"/>
+            			<input name="selfie" type="text" value = "${params?.selfie}"/>
             			<g:submitButton class="button" name="submitButton" value="search" />
         			</div>
     			</g:form>
@@ -41,7 +41,7 @@
 									
 						<g:sortableColumn property="phone" title="${message(code: 'user.phone.label', default: 'Phone')}" />
 					
-						<g:sortableColumn property="rating" title="${message(code: 'user.rating.label', default: 'Rating')}" />
+						<g:sortableColumn property="selfie" title="${message(code: 'user.selfie.label', default: 'Facebook URL')}" />
 					
 					</tr>
 				</thead>
@@ -55,7 +55,7 @@
 										
 						<td>${fieldValue(bean: userInstance, field: "phone")}</td>
 					
-						<td>${fieldValue(bean: userInstance, field: "rating")}</td>
+						<td>${fieldValue(bean: userInstance, field: "selfie")}</td>
 					
 					</tr>
 				</g:each>

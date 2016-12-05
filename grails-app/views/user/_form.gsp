@@ -41,7 +41,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'selfie', 'error')} required">
 	<label for="selfie">
-		<g:message code="user.selfie.label" default="Selfie" />
+		<g:message code="user.selfie.label" default="Facebook URL" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="selfie" required="" value="${userInstance?.selfie}"/>

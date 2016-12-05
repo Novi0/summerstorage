@@ -67,7 +67,7 @@
 			
 				<g:if test="${userInstance?.selfie}">
 				<li class="fieldcontain">
-					<span id="selfie-label" class="property-label"><g:message code="user.selfie.label" default="Selfie" /></span>
+					<span id="selfie-label" class="property-label"><g:message code="user.selfie.label" default="Facebook URL" /></span>
 					
 						<span class="property-value" aria-labelledby="selfie-label"><g:fieldValue bean="${userInstance}" field="selfie"/></span>
 					
