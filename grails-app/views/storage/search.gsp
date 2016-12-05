@@ -29,6 +29,14 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'distance', 'error')} required">
+	<label for="distance">
+		<g:message code="storage.distance.label" default="Max Distance (Miles)" />
+	</label>
+		<g:field name="distance" type="number decimal" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'startDate', 'error')} required">
 	<label for="startDate">
 		<g:message code="storage.startDate.label" default="Start Date" />
@@ -113,6 +121,8 @@
 					
 						<g:sortableColumn property="location" title="${message(code: 'storage.location.label', default: 'Location')}" />
 						
+						<g:sortableColumn property="distance" title="${message(code: 'storage.distance.label', default: 'Distance (Miles)')}" />
+						
 						<g:sortableColumn property="type" title="${message(code: 'storage.type.label', default: 'Type')}" />
 					
 						<g:sortableColumn property="startDate" title="${message(code: 'storage.startDate.label', default: 'Start Date')}" />
@@ -140,6 +150,8 @@
 						<td><g:link action="show" id="${storageInstance.id}">${fieldValue(bean: storageInstance, field: "photo")}</g:link></td>
 					
 						<td>${fieldValue(bean: storageInstance, field: "location")}</td>
+						
+						<td>${fieldValue(bean: storageInstance, field: "distance")}</td>
 						
 						<td>${fieldValue(bean: storageInstance, field: "type")}</td>
 					

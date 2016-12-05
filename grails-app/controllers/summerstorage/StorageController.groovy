@@ -3,12 +3,15 @@ package summerstorage
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.geocode.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class StorageController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
+	GeocoderService mapService = new GeocoderService();
 	
 	//def beforeInterceptor = [action:this.&auth, except:["index", "search", "show"]]
 
@@ -37,11 +40,48 @@ class StorageController {
         respond storageInstance
     }
 
+	def calcDist(double lat1, double lon1){
+		
+		def criteria = Storage.createCriteria()
+		def result = criteria.list{}
+		result.each { storage ->
+			def lat2 = storage.lat
+			def lon2 = storage.lng
+			
+		
+			final int R = 6371; // Radius of the earth
+	
+			Double latDistance = Math.toRadians(lat2 - lat1);
+			Double lonDistance = Math.toRadians(lon2 - lon1);
+			Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+					+ Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))* Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+			Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			storage.distance = R * c * 0.621371; // convert to miles
+			//println("DISTANCE")
+			println(storage.distance)
+			storage.save(flush:true)
+		}
+	}
+	
 	def search() {
 		params.max = Math.min(params.max ? params.int('max') : 5, 100)
  
+		
+		
+		def location = params.location + "St. Louis, MO"
+		def point = mapService.getLatLong(location)
+		def latitude = point.lat
+		def longitude = point.lng
+		
+		calcDist(latitude, longitude)
+		
+
 		def storageList = Storage.createCriteria().list (params) {
-						
+			
+			if(params.distance){
+				le("distance", Double.valueOf(params.distance))
+			}						
+			
 			if (params.startDate){
 				le("startDate", params.startDate)
 			}
@@ -76,7 +116,8 @@ class StorageController {
 	}
 	
     def create(User userInstance) {
-	    respond new Storage(params)
+		respond new Storage(params)
+		
     }
 	
     @Transactional
@@ -93,6 +134,11 @@ class StorageController {
             respond storageInstance.errors, view:'create'
             return
         }
+		def location = params.location + " St. Louis, MO"
+		def point = mapService.getLatLong(location)
+		storageInstance.lat = point.lat
+		storageInstance.lng = point.lng
+				
 		storageInstance.save flush:true
         request.withFormat {
             form multipartForm {
@@ -125,7 +171,12 @@ class StorageController {
             return
         }
 
-        storageInstance.save flush:true
+		def location = params.location + " St. Louis, MO"
+		def point = mapService.getLatLong(location)
+		storageInstance.lat = point.lat
+		storageInstance.lng = point.lng
+		
+		storageInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
