@@ -22,7 +22,7 @@
 		<g:form action = "search" method="GET">
 		<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'location', 'error')}" style="text-align: left;">
 	<label for="location">
-		<g:message code="storage.location.label" default="Location" />
+		<g:message code="storage.location.label" default="Street Address" />
 		
 	</label>
 	<g:textField name="location" value="${storageInstance?.location}"/>
@@ -119,7 +119,7 @@
 					
 						<g:sortableColumn property="photo" title="${message(code: 'storage.photo.label', default: 'Photo')}" />
 					
-						<g:sortableColumn property="location" title="${message(code: 'storage.location.label', default: 'Location')}" />
+						<g:sortableColumn property="location" title="${message(code: 'storage.location.label', default: 'Street Address')}" />
 						
 						<g:sortableColumn property="distance" title="${message(code: 'storage.distance.label', default: 'Distance (Miles)')}" />
 						

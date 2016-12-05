@@ -12,7 +12,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'location', 'error')} required">
 	<label for="location">
-		<g:message code="storage.location.label" default="Location" />
+		<g:message code="storage.location.label" default="Street Address" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="location" required="" value="${storageInstance?.location}"/>
