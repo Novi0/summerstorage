@@ -9,17 +9,17 @@ class BootStrap {
 		
 		
 		User Noah = new User (name: 'Noah', userEmail: 'noah@wustl.edu', password: 'asdf', 
-			phone: '1234567890', selfie: '1').save(flush:true);
+			phone: '1234567890', selfie: 'https://www.facebook.com/Noah').save(flush:true);
 		
 		
 		User Atticus = new User (name: 'Atticus', userEmail: 'asdf@wustl.edu', password: 'asdf',
 			phone: '1234567890', selfie: '2').save(flush:true);
 		
 		User Novi = new User (name: 'Novi', userEmail: 'novi@wustl.edu', password: 'asdf',
-			phone: '1234567890', selfie: '2').save(flush:true);
+			phone: '1234567890', selfie: 'https://www.facebook.com/Novi').save(flush:true);
 		
 		User Cancan = new User (name: 'Cancan', userEmail: 'cancan@wustl.edu', password: 'asdf',
-			phone: '1234567890', selfie: '2').save(flush:true);
+			phone: '1234567890', selfie: 'https://www.facebook.com/Cancan').save(flush:true);
 		
 		
 		Date start1 =new Date().parse("yyyy-MM-dd","2015-04-15")
