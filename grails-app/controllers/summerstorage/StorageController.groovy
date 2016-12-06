@@ -56,9 +56,18 @@ class StorageController {
 			Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
 					+ Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))* Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 			Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-			storage.distance = R * c * 0.621371; // convert to miles
+			storage.distance = Math.round(R * c *10*0.621371)/10; // convert to miles // convert to miles
 			//println("DISTANCE")
-			println(storage.distance)
+			//println(storage.distance)
+			storage.save(flush:true)
+		}
+	}
+	
+	def nullDist(){
+		def criteria = Storage.createCriteria()
+		def result = criteria.list{}
+		result.each { storage ->
+			storage.distance=0;
 			storage.save(flush:true)
 		}
 	}
@@ -73,7 +82,13 @@ class StorageController {
 		def latitude = point.lat
 		def longitude = point.lng
 		
-		calcDist(latitude, longitude)
+		if (params.location){
+			calcDist(latitude, longitude)
+		}
+		else
+		{
+			nullDist()
+		}
 		
 
 		def storageList = Storage.createCriteria().list (params) {
