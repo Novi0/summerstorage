@@ -8,15 +8,33 @@
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#show-storage" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/user/show/${session.user.id}')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="show" controller="User" action="show" id="${session.id }"  bean="${userInstance}">My Account</g:link></li>
-			</ul>
-		</div>
+		<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="text-align:right;">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+         <span class="icon-bar"></span>                    
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a class="home" href="${createLink(uri: '/')}"><span class="glyphicon glyphicon-home">Home</span></a></li>
+        <li><g:link controller="User" action="contract"><span class="glyphicon glyphicon-file">Terms</span></g:link></li>
+        <li><g:link controller="User" action="about"><span class="glyphicon glyphicon-grain">About</span></g:link></li>
+        <li><g:link controller="User" action="contact"><span class="glyphicon glyphicon-comment">Contact</span></g:link></li>
+        <li><g:link controller="Storage" action="search" id="${session.user.id}" bean="${userInstance}">
+        <span class="glyphicon glyphicon-search">Search</span></g:link></li>
+        <li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}"><span class="glyphicon glyphicon-user">My Account</span></g:link></li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
 		<div id="show-storage" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

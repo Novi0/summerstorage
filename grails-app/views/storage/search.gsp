@@ -1,4 +1,3 @@
-
 <%@ page import="summerstorage.Storage" %>
 <!DOCTYPE html>
 <html>
@@ -6,20 +5,50 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'storage.label', default: 'Storage')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-		<style>
-	
-		</style>
+		<script>
+		function advancesearch(id) {
+	        document.getElementById(id).style.display = 'inline'; 
+	    }
+	    
+		</script>
 	</head>
 	<body>
-		<a href="#list-storage" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-				<li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}">My Account</g:link></li>
-			</ul>
-		</div>
-		<g:form action = "search" method="GET">
+		
+		<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="text-align:right;">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+         <span class="icon-bar"></span>                    
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a class="home" href="${createLink(uri: '/')}"><span class="glyphicon glyphicon-home">Home</span></a></li>
+        <li><g:link controller="User" action="contract"><span class="glyphicon glyphicon-file">Term</span></g:link></li>
+        <li><g:link controller="User" action="about"><span class="glyphicon glyphicon-grain">About</span></g:link></li>
+        <li><g:link controller="User" action="contact"><span class="glyphicon glyphicon-comment">Contact</span></g:link></li>
+        <li><g:link controller="Storage" action="search" id="${session.user.id}" bean="${userInstance}">
+        <span class="glyphicon glyphicon-search">Search</span></g:link></li>
+        <li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}"><span class="glyphicon glyphicon-user">My Account</span></g:link></li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+  <br/>
+  <g:if test="${flash.message}">
+				<div class="message" role="status">${flash.message}</div>
+			</g:if>
+  <div id="create-storage" class="content scaffold-create" role="main">
+ <h1>Search</h1>
+ <button onClick="advancesearch('ad')" style="position:relative;left:50px">Advanced Search</button>
+	<g:form action = "search" method="GET">
 		<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'location', 'error')}" style="text-align: left;">
 	<label for="location">
 		<g:message code="storage.location.label" default="Street Address" />
@@ -51,8 +80,19 @@
 	<g:datePicker name="endDate" precision="day" />
 
 </div>
+<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'price', 'error')}" style="text-align: left;">
+	<label for="price">
+		<g:message code="storage.price.label" default="Price per day" />
+		
+	</label>
+	<g:field name="pricefrom" type="number decimal" /> - <g:field name="priceto" type="number decimal" />
+
+</div>
 
 
+
+
+<div id="ad" style="display:none">
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'floorsUp', 'error')}" style="text-align: left;">
 	<label for="floorsUp">
 		<g:message code="storage.floorsUp.label" default="Floors Up" />
@@ -70,14 +110,7 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'price', 'error')}" style="text-align: left;">
-	<label for="price">
-		<g:message code="storage.price.label" default="Price" />
-		
-	</label>
-	<g:field name="pricefrom" type="number decimal" /> - <g:field name="priceto" type="number decimal" />
 
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'climate', 'error')}" style="text-align: left;">
 	<label for="climate">
@@ -103,27 +136,26 @@
 		
 	</label>
 	<g:checkBox name="heavyAllowed"  />
-
+</div>
 </div>
 
-<g:submitButton name="search" value="search"/>
+
+
+
+
+<span class="glyphicon glyphicon-search" style="position:relative;left:50px;font-size:25px;"><g:submitButton name="search" value="search"/></span>
+
 		</g:form>
+		
+		</div>
+		
 		<div id="list-storage" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
+			
 			<table>
 			<thead>
 					<tr>
-					
-						<g:sortableColumn property="photo" title="${message(code: 'storage.photo.label', default: 'Photo')}" />
-					
-						<g:sortableColumn property="location" title="${message(code: 'storage.location.label', default: 'Street Address')}" />
-						
-						<g:sortableColumn property="distance" title="${message(code: 'storage.distance.label', default: 'Distance (Miles)')}" />
-						
-						<g:sortableColumn property="type" title="${message(code: 'storage.type.label', default: 'Type')}" />
+						<g:sortableColumn property="location" title="${message(code: 'storage.location.label', default: 'Location')}" />
 					
 						<g:sortableColumn property="startDate" title="${message(code: 'storage.startDate.label', default: 'Start Date')}" />
 						
@@ -133,13 +165,7 @@
 					
 						<g:sortableColumn property="height" title="${message(code: 'storage.height.label', default: 'Height')}" />
 					
-						<g:sortableColumn property="floorsUp" title="${message(code: 'storage.floorsUp.label', default: 'Floors Up')}" />
 						
-						<g:sortableColumn property="locks" title="${message(code: 'storage.locks.label', default: 'locks')}" />
-						
-						<g:sortableColumn property="climate" title="${message(code: 'storage.climate.label', default: 'Climate Controlled')}" />
-						
-						<g:sortableColumn property="heavyAllowed" title="${message(code: 'storage.heavyAllowed.label', default: 'Heavy Allowed')}" />
 					
 					</tr>
 				</thead>
@@ -147,13 +173,7 @@
 				<g:each in="${storageInstanceList}" status="i" var="storageInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${storageInstance.id}">${fieldValue(bean: storageInstance, field: "photo")}</g:link></td>
-					
-						<td>${fieldValue(bean: storageInstance, field: "location")}</td>
-						
-						<td>${fieldValue(bean: storageInstance, field: "distance")}</td>
-						
-						<td>${fieldValue(bean: storageInstance, field: "type")}</td>
+						<td><g:link action="show" id="${storageInstance.id}">${fieldValue(bean: storageInstance, field: "location")}</g:link></td>
 					
 						<td><g:formatDate format="MMM dd yyyy" date="${storageInstance.startDate}" /></td>
 						
@@ -162,14 +182,6 @@
 						<td>${fieldValue(bean: storageInstance, field: "area")}</td>
 					
 						<td>${fieldValue(bean: storageInstance, field: "height")}</td>
-					
-						<td>${fieldValue(bean: storageInstance, field: "floorsUp")}</td>
-						
-						<td>${fieldValue(bean: storageInstance, field: "locks")}</td>
-						
-						<td>${fieldValue(bean: storageInstance, field: "climate")}</td>
-						
-						<td>${fieldValue(bean: storageInstance, field: "heavyAllowed")}</td>
 					
 					</tr>
 				</g:each>

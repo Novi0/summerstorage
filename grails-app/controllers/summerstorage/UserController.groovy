@@ -9,7 +9,7 @@ import grails.transaction.Transactional
 class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userInstanceCount: User.count()]
@@ -77,6 +77,20 @@ class UserController {
     def create() {
         def u = new User(params)
 		session.user=u
+//		//save image
+//		def f = request.getFile('avatar')
+//		
+//		  // List of OK mime-types
+//		  if (!okcontents.contains(f.getContentType())) {
+//			flash.message = "Avatar must be one of: ${okcontents}"
+//			render(view:'select_avatar', model:[userInstance:u])
+//			return
+//		  }
+//		
+//		  // Save the image and mime type
+//		  u.avatar = f.bytes
+//		  u.avatarType = f.contentType
+//		  log.info("File uploaded: $user.avatarType")
      }
 
     @Transactional
@@ -104,7 +118,8 @@ class UserController {
             }
             '*' { respond userInstance, [status: CREATED] }
         }
-	redirect controller:"Storage",view:"index"
+		
+		redirect (uri:'/')
     }
 
     def edit(User userInstance) {
@@ -173,11 +188,12 @@ class UserController {
 		def u=User.findById(session.user.id)
 		u.refresh();
 		def s=chainModel?.storage
-		println(u.id)
+		println("the user id is"+u.id)
+		
 		s.save flush:true
 		u.addToStorage(s)
 		u.save flush:true
-		redirect action:"show",id:u.id,model:[serviceHoursInstance:s]
+		redirect action:"show",id:u.id,model:[storageInstance:s]
 	}
 	def register(){
 		redirect(action: 'create')
@@ -210,5 +226,17 @@ class UserController {
 	
 	def doUpload(){
 		
+	}
+	
+	def contract(){
+		render view:"contract"
+	}
+	
+	def contact(){
+		render view:"contact"
+	}
+	
+	def about(){
+		render view:"about"
 	}
 }

@@ -9,7 +9,6 @@ class User {
 	double rating;
 	String selfie;
 	
-	
 	/*
 	byte[] image;
 	String imageName;
@@ -32,5 +31,3 @@ class User {
 	}
 	static hasMany=[storage:Storage]
 }
-
-

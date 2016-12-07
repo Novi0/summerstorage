@@ -1,5 +1,5 @@
-<%@ page import="summerstorage.User" %>
 
+<%@ page import="summerstorage.User" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,7 +30,7 @@
 							
 						<g:sortableColumn property="phone" title="${message(code: 'user.phone.label', default: 'Phone')}" />
 					
-						<g:sortableColumn property="selfie" title="${message(code: 'user.selfie.label', default: 'Facebook URL')}" />
+						<g:sortableColumn property="rating" title="${message(code: 'user.rating.label', default: 'Rating')}" />
 					
 					</tr>
 				</thead>
@@ -40,11 +40,13 @@
 					
 						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "name")}</g:link></td>
 					
-						<td>${fieldValue(bean: userInstance, field: "userEmail")}</td>								
+						<td>${fieldValue(bean: userInstance, field: "userEmail")}</td>
+						
+									
 								
 						<td>${fieldValue(bean: userInstance, field: "phone")}</td>
 					
-						<td>${fieldValue(bean: userInstance, field: "selfie")}</td>
+						<td>${fieldValue(bean: userInstance, field: "rating")}</td>
 					
 					</tr>
 				</g:each>

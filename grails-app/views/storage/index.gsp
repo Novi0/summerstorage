@@ -1,4 +1,3 @@
-
 <%@ page import="summerstorage.Storage" %>
 <!DOCTYPE html>
 <html>
@@ -6,18 +5,54 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'storage.label', default: 'Storage')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-		<style>
-	
-		</style>
+		<script>
+		function advancesearch(id) {
+	        document.getElementById(id).style.display = 'inline'; 
+	    }
+	    
+		</script>
 	</head>
 	<body>
-		<a href="#list-storage" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<!--  <a href="#list-storage" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 				<li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}">My Account</g:link></li>
 			</ul>
+		</div>-->
+		<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="text-align:right;">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+         <span class="icon-bar"></span>                    
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a class="home" href="${createLink(uri: '/')}"><span class="glyphicon glyphicon-home">Home</span></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-file">Terms</span></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-grain">About</span></a></li>
+        <li><g:link controller="Storage" action="search" id="${session.user.id}" bean="${userInstance}">
+        <span class="glyphicon glyphicon-search">Search</span></g:link></li>
+        <li><a href="#"><span class="glyphicon glyphicon-comment">Contact</span></a></li>
+        <li> <g:link controller="User" action="show" id="${session.user.id}" bean="${userInstance}"><span class="glyphicon glyphicon-user">My Account</span></g:link></li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+  <br/>
+  
+  <div id="create-storage" class="content scaffold-create" role="main">
+ <h1><span class="glyphicon glyphicon-search">Search</span></h1>
+ 
 		</div>
 		
 		<div id="list-storage" class="content scaffold-list" role="main">

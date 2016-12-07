@@ -66,7 +66,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: storageInstance, field: 'price', 'error')} required">
 	<label for="price">
-		<g:message code="storage.price.label" default="Price" />
+		<g:message code="storage.price.label" default="Price per day" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="price" type="number decimal" value="${storageInstance.price}" required=""/>
@@ -108,4 +108,3 @@
 	<g:datePicker name="endDate" precision="day"  value="${storageInstance?.endDate}"  />
 
 </div>
-

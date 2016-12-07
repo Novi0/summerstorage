@@ -11,3 +11,90 @@
 *= require mobile
 *= require_self
 */
+ html,body{
+    height:100%;    
+    margin:0;
+    padding:0;
+    border:0;
+}
+
+div{
+    margin:0;
+    border:0;
+}
+body{
+	 font: 400 15px/1.8 Lato, sans-serif;
+      background-color:#f2f2f2;
+}
+input[type=button]{
+	width:80%;
+    padding: 8px 20px;
+    margin: 8px 8px;
+    box-sizing: border-box;
+}
+
+.navbar-header{
+	text-align:right;
+}
+ .navbar {
+      
+      margin-bottom: 0;
+      background-color:#00cc66;
+      border: 0;
+      font-size: 1.5em !important;
+      letter-spacing: 4px;
+      opacity: 0.9;
+  }
+  .navbar li a, .navbar .navbar-brand { 
+      color: #d5d5d5 !important;
+  }
+  .navbar-nav li a:hover {
+      color: #004d1a !important;
+  }
+  .navbar-nav li.active a {
+      color: #004d1a !important;
+      background-color: #f2f2f2 !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+  }
+  .floating-box {
+    display: inline-block;
+    width: 70%;
+    height: 80%;
+    margin: 50px;
+    border: 50px;
+    text-align: center;
+    
+}
+
+.form{
+	font-size:1.5em;
+}
+.container{
+	min-height:550px;
+	
+}
+ .person {
+      border: 10px solid transparent;
+      margin-bottom: 25px;
+      width: 80%;
+      height: 80%;
+      opacity: 0.7;
+  }
+  .person:hover {
+      border-color: #f1f1f1;
+  }
+img.avatar {
+  width: 6.0em;
+  height: 7.5em;
+}
+img.avatar_small {
+  width: 4em;
+  height: 5em;
+}
+
+img.avatar_tiny {
+  width: 2em;
+  height: 2.5em;
+}

@@ -19,10 +19,6 @@ class Storage {
 	String type;
 	Boolean heavyAllowed;
 	
-	double lat;
-	double lng;
-	double distance;
-	
 	
 	static constraints = {
 		photo blank: false;
@@ -38,11 +34,7 @@ class Storage {
 		type blank: false, atrribute: ["Basement", "Storage Locker", "Closed Room", "Open Room" ];
 		heavyAllowed blank: false, attribute: ["Yes","No"];
 		
-		user nullable: true;
-		lat nullable: true;
-		lng nullable: true;
-		distance nullable: true;
-		
+		user nullable:true;
    }
 	static belongsTo=[user:User]
 	
